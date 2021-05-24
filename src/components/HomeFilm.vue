@@ -57,9 +57,9 @@ export default {
   },
   async created () {
     const CopyPromise = await prom
-    const UrlImg = CopyPromise.backdrop_path
-    this.poster = `https://image.tmdb.org/t/p/original${UrlImg}`
-    console.log(prom)
+    // const UrlImg = CopyPromise.backdrop_path
+    // this.poster = `https://image.tmdb.org/t/p/original${UrlImg}`
+    console.log(CopyPromise)
   },
   methods: {
   }
