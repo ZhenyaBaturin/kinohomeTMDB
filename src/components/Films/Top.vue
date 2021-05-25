@@ -91,13 +91,13 @@ export default {
         this.elevations.push(move)
       })
       // createdNewElem(CopyPromise)
-      console.log(CopyPromise)
+      // console.log(CopyPromise)
     }
     created()
   },
   methods: {
-    createdNewElem: function (promise) {
-      promise.results.forEach(el => {
+    createdNewElem: (promise) => {
+      promise.forEach(el => {
         let move = {}
         move.title = el.title
         move.date = el.release_date
@@ -111,14 +111,11 @@ export default {
     }
   },
   watch: {
-    page: async () => {
-    //   async function changePage (num) {
-    //     const CopyPromise = await prom(this.page)
-    //     createdNewElem(CopyPromise)
-    //   }
-    //   changePage(this.page)
+    async page () {
       console.log(this)
-      console.log(createdNewElem(await prom(this.page)))
+      const copy = await prom(this.page)
+      console.log(copy.results)
+      createdNewElem(copy.results)
     }
   }
 }
