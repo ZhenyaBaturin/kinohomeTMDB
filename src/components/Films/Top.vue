@@ -15,7 +15,7 @@
           <span
           class="title count"
           >
-            {{ (i + 1) }}
+            {{ (i + 1)+((page - 1) * 20) }}
           </span>
           <v-sheet
             :elevation=4
@@ -23,15 +23,19 @@
             height="150"
             width="100"
           >
-            <v-img
-              max-height="150"
-              max-width="100"
-              :src=elevation.poster
-            ></v-img>
+            <router-link to="/result">
+                <v-img
+                  max-height="150"
+                  max-width="100"
+                  :src=elevation.poster
+                ></v-img>
+            </router-link>
           </v-sheet>
           <v-list-item three-line>
                 <v-list-item-content>
-                    <v-list-item-title>{{ elevation.title }}</v-list-item-title>
+                  <router-link class="active" tag="v-list-item-title" to="/result">
+                    {{ elevation.title }}
+                  </router-link>
                     <v-list-item-subtitle>
                     {{ elevation.date }}
                     </v-list-item-subtitle>
@@ -70,7 +74,7 @@
 </template>
 
 <script>
-import prom from '../../api'
+import { getPopulMoves } from '../../api'
 export default {
   data: () => ({
     page: 1,
@@ -78,25 +82,14 @@ export default {
   }),
   mounted () {
     const created = async () => {
-      const CopyPromise = await prom(this.page)
-      CopyPromise.results.forEach(el => {
-        let move = {}
-        move.title = el.title
-        move.date = el.release_date
-        move.overview = el.overview
-        move.popularity = el.vote_average
-        move.poster = `https://image.tmdb.org/t/p/original${el.poster_path}`
-        move.populStar = el.vote_average / 2
-        move.id = el.id
-        this.elevations.push(move)
-      })
-      // createdNewElem(CopyPromise)
-      // console.log(CopyPromise)
+      const CopyPromise = await getPopulMoves(this.page)
+      this.createdNewElem(CopyPromise.results)
     }
     created()
   },
   methods: {
-    createdNewElem: (promise) => {
+    createdNewElem (promise) {
+      this.elevations = []
       promise.forEach(el => {
         let move = {}
         move.title = el.title
@@ -112,10 +105,8 @@ export default {
   },
   watch: {
     async page () {
-      console.log(this)
-      const copy = await prom(this.page)
-      console.log(copy.results)
-      createdNewElem(copy.results)
+      const CopyPromise = await getPopulMoves(this.page)
+      this.createdNewElem(CopyPromise.results)
     }
   }
 }
@@ -135,5 +126,8 @@ export default {
     }
     .count{
       min-width: 20px;
+    }
+    .active{
+      cursor:pointer
     }
 </style>
