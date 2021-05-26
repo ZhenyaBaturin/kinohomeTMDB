@@ -96,7 +96,7 @@ export default new Router({
       component: Film
     },
     {
-      path: '/result',
+      path: '/result/:id',
       name: 'Result',
       component: Result
     }

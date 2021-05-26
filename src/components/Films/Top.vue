@@ -23,7 +23,7 @@
             height="150"
             width="100"
           >
-            <router-link to="/result">
+            <router-link :to="'/result/' + elevation.id">
                 <v-img
                   max-height="150"
                   max-width="100"
@@ -33,7 +33,7 @@
           </v-sheet>
           <v-list-item three-line>
                 <v-list-item-content>
-                  <router-link class="active" tag="v-list-item-title" to="/result">
+                  <router-link class="active" tag="v-list-item-title" :to="'/result/' + elevation.id">
                     {{ elevation.title }}
                   </router-link>
                     <v-list-item-subtitle>

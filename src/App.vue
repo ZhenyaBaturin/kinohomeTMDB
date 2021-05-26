@@ -50,7 +50,7 @@
             @click="drawer = !drawer"
             max-height="48"
             max-width="250"
-            class="hidden-sm-and-down"
+            class="hidden-sm-and-down image"
           ></v-img>
           {{resultSearch}}
         <v-spacer></v-spacer>
@@ -179,7 +179,6 @@ export default {
     return {
       multiLine: true,
       snackbar: true,
-
       img,
       drawer: false,
       resultSearch: '',
@@ -234,3 +233,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.image {
+  cursor: pointer;
+}
+</style>
