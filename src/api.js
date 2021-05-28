@@ -18,7 +18,17 @@ function getMovieId (id) {
     .then(data => data)
   return promise
 }
-export { getPopulMoves, getMovieId }
+
+function searchMulty (name) {
+  const topPath = 'https://api.themoviedb.org/3/search/multi'
+  const lang = 'ru-RU'
+  const promise = fetch(
+    `${topPath}?api_key=${API_KEY}&language=${lang}&query=${name}`)
+    .then(resolve => resolve.json())
+    .then(data => data)
+  return promise
+}
+export { getPopulMoves, getMovieId, searchMulty }
 
 // const topPath = 'http://api.themoviedb.org/3/movie/top_rated'
 // const lang = 'ru-RU'

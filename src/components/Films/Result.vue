@@ -91,9 +91,8 @@ export default {
       this.infoAboutTheMovie.push({name: 'Компания', value: getArrayDate(promise.production_companies)})
       this.infoAboutTheMovie.push({name: 'Жанр', value: getArrayDate(promise.genres)})
       this.infoAboutTheMovie.push({name: 'Слоган', value: promise.tagline})
-      this.infoAboutTheMovie.push({name: 'Бютжет', value: `${promise.budget} $`})
-      this.infoAboutTheMovie.push({name: 'Сборы', value: `${promise.revenue} $`})
-      console.log(promise)
+      this.infoAboutTheMovie.push({ name: 'Бютжет', value: promise.budget })
+      this.infoAboutTheMovie.push({ name: 'Сборы', value: promise.revenue })
     }
   },
 
@@ -105,6 +104,12 @@ export default {
           arr.push(el.name)
         })
         return arr.join(', ')
+      }
+      if (!isNaN(value) && value > 10000) {
+        let m = String(value).match(/^(.*?)((?:[,.]\d+)?|)$/)
+        if (m) {
+          return `${m[1].replace(/\B(?=(?:\d{3})*$)/g, ' ') + m[2]} $`
+        }
       }
       return value
     }

@@ -54,17 +54,7 @@
           ></v-img>
           {{resultSearch}}
         <v-spacer></v-spacer>
-        <v-responsive
-        max-width="260">
-          <v-text-field
-            @keyup.enter="asyncSearch"
-            dense
-            flat
-            hide-details
-            rounded
-            solo-inverted
-          ></v-text-field>
-        </v-responsive>
+        <SearchMenu />
         <v-menu
           v-if="isUserLoggedIn"
           open-on-hover
@@ -170,13 +160,17 @@
 
 <script>
 import img from '../build/logoza.ru.png'
-// import promise from './api'
+import { searchMulty } from './api'
+import SearchMenu from './components/SearchPanal/SearchMenu'
 
 export default {
-
   name: 'App',
+  components: {
+    SearchMenu
+  },
   data: function () {
     return {
+      search: '',
       multiLine: true,
       snackbar: true,
       img,
@@ -203,6 +197,7 @@ export default {
       ]
     }
   },
+
   computed: {
     error () {
       return this.$store.getters.error
@@ -219,6 +214,7 @@ export default {
       }
     }
   },
+
   methods: {
     closeError () {
       this.$store.dispatch('clearError')
@@ -229,6 +225,12 @@ export default {
     },
     asyncSearch: (event) => {
       event.target.value = ''
+    }
+  },
+  watch: {
+    async search () {
+      const CopyPromise = await searchMulty(this.search)
+      console.log(CopyPromise)
     }
   }
 }
