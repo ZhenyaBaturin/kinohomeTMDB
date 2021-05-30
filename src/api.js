@@ -29,12 +29,3 @@ function searchMulty (name) {
   return promise
 }
 export { getPopulMoves, getMovieId, searchMulty }
-
-// const topPath = 'http://api.themoviedb.org/3/movie/top_rated'
-// const lang = 'ru-RU'
-// const page = 1
-// const promise = fetch(
-//   `${topPath}?api_key=${API_KEY}&language=${lang}&page=${page}`)
-//   .then(resolve => resolve.json())
-//   .then(data => data)
-// export default promise

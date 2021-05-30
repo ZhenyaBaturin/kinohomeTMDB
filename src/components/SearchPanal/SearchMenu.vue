@@ -6,6 +6,7 @@
                 <v-text-field
                     @keyup.enter="asyncSearch"
                     v-model='search'
+                    @keyup="getValue"
                     dense
                     flat
                     hide-details
@@ -16,13 +17,15 @@
                 ></v-text-field>
             </template>
             <v-list>
-                <v-list-item-title class="pl-3">Фильмы</v-list-item-title>
+                <v-list-item-title v-if="!movies.length && !persones.length" class="pl-3">Введите корректный текст</v-list-item-title>
+                <v-list-item-title v-if="movies.length" class="pl-3">Фильмы</v-list-item-title>
                 <v-col
                 v-for="(movie, i) in movies"
                 :key="i"
                 cols="12"
                 class="pb-0 pt-1"
                 >
+                <router-link :to="'/result/' + movie.id">
                     <v-card
                         dark
                         link
@@ -33,24 +36,26 @@
                               class="text-h5"
                               v-text="movie.title"
                               ></v-card-title>
-
-                              <v-card-subtitle v-text="movie.artist"></v-card-subtitle>
+                              <div class="wrapper-valuation-num green--text ml-4">
+                              {{ movie.vote_average }}
+                              </div>
+                              <v-card-subtitle v-text="movie.original_title"></v-card-subtitle>
                           </div>
-                          <v-avatar
+                              <v-img
                               class="ma-3"
-                              size="75"
-                              tile
-                          >
-                              <v-img :src="movie.src"></v-img>
-                          </v-avatar>
+                              max-height="140"
+                              max-width="75"
+                              :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`"></v-img>
+
                         </div>
                     </v-card>
+                    </router-link>
                 </v-col>
             </v-list>
-            <v-list v-if="actors">
-                <v-list-item-title class="pl-3">Актеры</v-list-item-title>
+            <v-list>
+                <v-list-item-title v-if="persones.length" class="pl-3">Актеры</v-list-item-title>
                 <v-col
-                v-for="(actor, i) in actors"
+                v-for="(person, i) in persones"
                 :key="i"
                 cols="12"
                 class="pb-0 pt-1"
@@ -63,17 +68,16 @@
                           <div>
                               <v-card-title
                               class="text-h5"
-                              v-text="actor.title"
+                              v-text="person.name"
                               ></v-card-title>
-
-                              <v-card-subtitle v-text="actor.artist"></v-card-subtitle>
+                              <v-card-subtitle v-text="person.artist"></v-card-subtitle>
                           </div>
                           <v-avatar
                               class="ma-3"
                               size="75"
                               tile
                           >
-                              <v-img :src="actor.src"></v-img>
+                              <v-img :src="`https://image.tmdb.org/t/p/original${person.profile_path}`"></v-img>
                           </v-avatar>
                         </div>
                     </v-card>
@@ -85,34 +89,29 @@
 </template>
 
 <script>
-import { searchMulty } from '../../api'
+// import { searchMulty } from '../../api'
 export default {
   name: 'SearchMenu',
   data: function () {
     return {
-      search: '',
-      movies: [
-        {
-          color: '#1F7087',
-          src: 'https://cdn.vuetifyjs.com/images/cards/foster.jpg',
-          title: 'Supermodel',
-          artist: 'Foster the People'
-        },
-        {
-          color: '#952175',
-          src: 'https://cdn.vuetifyjs.com/images/cards/halcyon.png',
-          title: 'Halcyon Days',
-          artist: 'Ellie Goulding'
-        }
-      ],
-      actors: null
+      search: ''
     }
   },
-  watch: {
-    async search () {
-      const CopyPromise = await searchMulty(this.search)
-      console.log(CopyPromise)
+  methods: {
+    getValue (e) {
+      this.$store.dispatch('asyncChangeValue', e.target.value)
     }
-  }
+  },
+  computed: {
+    movies () {
+      console.log(this.$store.getters.croppedValueMovies)
+      return this.$store.getters.croppedValueMovies
+    },
+    persones () {
+      console.log(this.$store.getters.croppedValuePersones)
+      return this.$store.getters.croppedValuePersones
+    }
+  },
+  watch: {}
 }
 </script>
