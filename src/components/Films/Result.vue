@@ -6,7 +6,6 @@
             <v-flex xs5
             class="pt-5 pl-5">
                 <v-img
-                    lazy-src="https://picsum.photos/id/11/10/6"
                     max-width="350"
                     :src=poster
                 ></v-img>
@@ -44,11 +43,35 @@
             <p>{{ overview }}</p>
           </v-flex>
         </v-layout>
+        <v-layout row>
+          <h2>Рейтинги TMDB</h2>
+          <v-flex>
+           <v-rating
+              color="warning"
+              hover
+              length="10"
+              readonly
+              size="50"
+              value="7.122"
+            ></v-rating>
+          </v-flex>
+          <h2>Рейтинги КиноHome</h2>
+          <v-flex>
+            <v-rating
+              color="warning"
+              hover
+              length="10"
+              size="50"
+              value="1.5"
+            ></v-rating>
+          </v-flex>
+        </v-layout>
+
     </v-container>
 </template>
 
 <script>
-import { getMovieId } from '../../api'
+import { getMovieOnId } from '../../api'
 export default {
   data: function () {
     return {
@@ -63,7 +86,7 @@ export default {
 
   mounted () {
     const createdMovie = async () => {
-      const CopyPromise = await getMovieId(this.id)
+      const CopyPromise = await getMovieOnId(this.id)
       this.createdNewElem(CopyPromise)
     }
     createdMovie()
@@ -112,6 +135,17 @@ export default {
         }
       }
       return value
+    }
+  },
+
+  watch: {
+    $route (toR, fromR) {
+      this.id = toR.params['id']
+      const createdMovie = async () => {
+        const CopyPromise = await getMovieOnId(this.id)
+        this.createdNewElem(CopyPromise)
+      }
+      createdMovie()
     }
   }
 }

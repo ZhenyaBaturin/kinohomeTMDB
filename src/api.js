@@ -9,7 +9,7 @@ function getPopulMoves (page = 1) {
     .then(data => data)
   return promise
 }
-function getMovieId (id) {
+function getMovieOnId (id) {
   const topPath = 'http://api.themoviedb.org/3/movie/'
   const lang = 'ru-RU'
   const promise = fetch(
@@ -28,4 +28,4 @@ function searchMulty (name) {
     .then(data => data)
   return promise
 }
-export { getPopulMoves, getMovieId, searchMulty }
+export { getPopulMoves, getMovieOnId, searchMulty }

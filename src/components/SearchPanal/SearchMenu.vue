@@ -25,11 +25,15 @@
                 cols="12"
                 class="pb-0 pt-1"
                 >
-                <router-link :to="'/result/' + movie.id">
+                  <router-link :to="'/result/' + movie.id">
                     <v-card
                         dark
                         link
                     >
+                    <v-img
+                      max-height="150"
+                      max-width="400"
+                      :src="`https://image.tmdb.org/t/p/original${movie.backdrop_path}`">
                         <div class="d-flex flex-no-wrap justify-space-between">
                           <div>
                               <v-card-title
@@ -41,15 +45,10 @@
                               </div>
                               <v-card-subtitle v-text="movie.original_title"></v-card-subtitle>
                           </div>
-                              <v-img
-                              class="ma-3"
-                              max-height="140"
-                              max-width="75"
-                              :src="`https://image.tmdb.org/t/p/original${movie.poster_path}`"></v-img>
-
                         </div>
+                        </v-img>
                     </v-card>
-                    </router-link>
+                  </router-link>
                 </v-col>
             </v-list>
             <v-list>
@@ -104,11 +103,11 @@ export default {
   },
   computed: {
     movies () {
-      console.log(this.$store.getters.croppedValueMovies)
+      // console.log(this.$store.getters.croppedValueMovies)
       return this.$store.getters.croppedValueMovies
     },
     persones () {
-      console.log(this.$store.getters.croppedValuePersones)
+      // console.log(this.$store.getters.croppedValuePersones)
       return this.$store.getters.croppedValuePersones
     }
   },
