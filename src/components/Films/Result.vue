@@ -37,36 +37,43 @@
                 </v-simple-table>
             </v-flex>
         </v-layout>
-        <v-layout row>
           <h2>Обзор</h2>
-          <v-flex>
-            <p>{{ overview }}</p>
-          </v-flex>
-        </v-layout>
-        <v-layout row>
+          <v-row>
+            <v-col cols="12">
+              <p>{{ overview }}</p>
+            </v-col>
+          </v-row>
           <h2>Рейтинги TMDB</h2>
-          <v-flex>
-           <v-rating
+          <v-row >
+            <v-col>
+              <v-rating
+              v-model="vote_average"
               color="warning"
               hover
               length="10"
               readonly
               size="50"
-              value="7.122"
-            ></v-rating>
-          </v-flex>
+              ></v-rating>
+            </v-col>
+            <v-col  class="rating">
+              <h2 text-color="green" :class="vote_average >= 7 ? 'green--text': 'grey--text'" class="rating_text">{{ vote_average }}</h2>
+            </v-col>
+          </v-row>
           <h2>Рейтинги КиноHome</h2>
-          <v-flex>
-            <v-rating
-              color="warning"
-              hover
-              length="10"
-              size="50"
-              value="1.5"
-            ></v-rating>
-          </v-flex>
-        </v-layout>
-
+          <v-row>
+            <v-col>
+              <v-rating
+                v-model="vote_kinohome"
+                color="warning"
+                hover
+                length="10"
+                size="50"
+              ></v-rating>
+            </v-col>
+            <v-col class="rating">
+              <h2 :class="vote_kinohome >= 7 ? 'green--text': 'grey--text'" class="rating_text">{{ vote_kinohome }}</h2>
+            </v-col>
+          </v-row>
     </v-container>
 </template>
 
@@ -80,6 +87,8 @@ export default {
       title: '',
       originalTitle: '',
       overview: '',
+      vote_average: null,
+      vote_kinohome: 0,
       infoAboutTheMovie: null
     }
   },
@@ -108,6 +117,7 @@ export default {
       this.title = promise.title
       this.originalTitle = promise.original_title
       this.overview = promise.overview
+      this.vote_average = promise.vote_average
       this.poster = `https://image.tmdb.org/t/p/original${promise.poster_path}`
       this.infoAboutTheMovie.push({name: 'Год производства', value: promise.release_date.substr(0, 4)})
       this.infoAboutTheMovie.push({name: 'Страна', value: getArrayDate(promise.production_countries)})
@@ -141,6 +151,7 @@ export default {
   watch: {
     $route (toR, fromR) {
       this.id = toR.params['id']
+      this.vote_kinohome = 0
       const createdMovie = async () => {
         const CopyPromise = await getMovieOnId(this.id)
         this.createdNewElem(CopyPromise)
@@ -153,5 +164,14 @@ export default {
 <style scoped>
 h3 {
   color: grey
+}
+.rating {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.rating_text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 30px;
 }
 </style>

@@ -16,6 +16,7 @@ import Exit from '@/components/User/Exit'
 import ResultOfSearch from '@/components/Films/ResultOfSearch'
 import Film from '@/components/Films/Film'
 import Result from '@/components/Films/Result'
+import Person from '@/components/Films/Person'
 
 Vue.use(Router)
 
@@ -99,6 +100,11 @@ export default new Router({
       path: '/result/:id',
       name: 'Result',
       component: Result
+    },
+    {
+      path: '/person/:id',
+      name: 'Person',
+      component: Person
     }
   ],
   mode: 'history'

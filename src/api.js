@@ -28,4 +28,14 @@ function searchMulty (name) {
     .then(data => data)
   return promise
 }
-export { getPopulMoves, getMovieOnId, searchMulty }
+
+function getPersonOnId (id) {
+  const topPath = 'https://api.themoviedb.org/3/person/'
+  const lang = 'ru-RU'
+  const promise = fetch(
+    `${topPath}${id}?api_key=${API_KEY}&language=${lang}`)
+    .then(resolve => resolve.json())
+    .then(data => data)
+  return promise
+}
+export { getPopulMoves, getMovieOnId, searchMulty, getPersonOnId }

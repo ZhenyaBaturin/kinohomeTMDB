@@ -23,7 +23,7 @@
                 v-for="(movie, i) in movies"
                 :key="i"
                 cols="12"
-                class="pb-0 pt-1"
+                class="pl-1 pr-1 pb-0 pt-1"
                 >
                   <router-link :to="'/result/' + movie.id">
                     <v-card
@@ -59,6 +59,7 @@
                 cols="12"
                 class="pb-0 pt-1"
                 >
+                  <router-link :to="'/person/' + person.id">
                     <v-card
                         dark
                         link
@@ -80,6 +81,7 @@
                           </v-avatar>
                         </div>
                     </v-card>
+                  </router-link>
                 </v-col>
             </v-list>
         </v-menu>
@@ -107,7 +109,7 @@ export default {
       return this.$store.getters.croppedValueMovies
     },
     persones () {
-      // console.log(this.$store.getters.croppedValuePersones)
+      console.log(this.$store.getters.croppedValuePersones)
       return this.$store.getters.croppedValuePersones
     }
   },
