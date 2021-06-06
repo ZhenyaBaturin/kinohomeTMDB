@@ -29,6 +29,7 @@
                     <v-card
                         dark
                         link
+                        
                     >
                     <v-img
                       max-height="150"
@@ -63,6 +64,7 @@
                     <v-card
                         dark
                         link
+                        
                     >
                         <div class="d-flex flex-no-wrap justify-space-between">
                           <div>
@@ -105,14 +107,14 @@ export default {
   },
   computed: {
     movies () {
-      // console.log(this.$store.getters.croppedValueMovies)
       return this.$store.getters.croppedValueMovies
     },
     persones () {
-      console.log(this.$store.getters.croppedValuePersones)
       return this.$store.getters.croppedValuePersones
     }
   },
   watch: {}
 }
 </script>
+<style scoped>
+</style>
